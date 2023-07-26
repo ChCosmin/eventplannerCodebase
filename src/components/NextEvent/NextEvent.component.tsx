@@ -3,7 +3,7 @@ import React from 'react';
 import {Avatar, Chip, styled} from '@mui/material';
 import './NextEvent.styles.css';
 import {NextEventProps} from '../Interfaces';
-import {formatDate} from 'src/utils/formatters';
+import {formatDate} from '../../utils/formatters';
 
 const CustomDateChip = styled(Chip)`
   background: #3d3d3d;
@@ -15,12 +15,16 @@ const CustomDateChip = styled(Chip)`
   align-self: flex-end;
 `;
 
+const texts = {
+  TITLE: 'Your next event:'
+};
+
 const NextEvent = (props: NextEventProps) => {
   const {title, description, startDate, image} = props;
 
   return (
-    <div className="next-event_container">
-      <h4 className="next-event_title">Your next event:</h4>
+    <div className="next-event_container" data-testid="next-event_container">
+      <h4 className="next-event_title">{texts.TITLE}</h4>
       <div className="next-event">
         <div className="next-event_group">
           <div className="next-event_logo-container">

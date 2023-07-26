@@ -9,7 +9,7 @@ import EventPlannerTitle from './EventPlannerTitle.component';
 import mockedData from '../../mockData/mockData.json';
 import {getFilters, getNextEvent} from '../../utils/formatters';
 import {NextEventProps} from '../Interfaces';
-import NoSubscriptions from './NoSubscriptions.component';
+import NoSubscriptions from '../NoSubscriptions/NoSubscriptions.component';
 
 const EventPlanner = () => {
   const [eventList, setEventList] = useState<NextEventProps[] | []>([]);

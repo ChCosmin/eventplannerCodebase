@@ -14,15 +14,27 @@ const CustomSortbyChip = styled(Chip)`
   user-select: none;
 `;
 
+const texts = {
+  TITLE: 'Discover Upcoming Events:',
+  SORTBY: 'Sort by:'
+};
+
 const DiscoverEvents = (props: DiscoverEventsProps) => {
   const {sortByFilters, activeFilters, onFilterClick} = props;
   return (
-    <div className="discover-events_container">
-      <h4 className="discover-events_title">Discover Upcoming Events:</h4>
+    <div className="discover-events_container" data-testid="discover-events_container">
+      <h4 className="discover-events_title">{texts.TITLE}</h4>
       <div className="discover-events_sort-by">
-        <span className="discover-events_sort-by-label">Sort by:</span>
+        <span className="discover-events_sort-by-label">{texts.SORTBY}</span>
         {sortByFilters.map((filter: string) => (
-          <CustomSortbyChip onClick={onFilterClick} variant={activeFilters.includes(filter) ? 'filled' : 'outlined'} key={filter} label={filter} />
+          <CustomSortbyChip
+            data-testid="discover-event_filter"
+            data-isActive={activeFilters.includes(filter)}
+            onClick={onFilterClick}
+            variant={activeFilters.includes(filter) ? 'filled' : 'outlined'}
+            key={filter}
+            label={filter}
+          />
         ))}
       </div>
     </div>

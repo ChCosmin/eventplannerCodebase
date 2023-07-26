@@ -2,6 +2,6 @@
 import React from 'react';
 
 const NoSubscriptions = () => {
-  return <div className="no-subs-found">No subscriptions found</div>;
+  return <div className="no-subs-found" data-testid="no-subs-found">No subscriptions found</div>;
 };
 export default NoSubscriptions;

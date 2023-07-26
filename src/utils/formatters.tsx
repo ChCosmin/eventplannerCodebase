@@ -1,4 +1,4 @@
-import {NextEventProps} from 'src/components/Interfaces';
+import {NextEventProps} from 'components/Interfaces';
 import {format, closestTo} from 'date-fns';
 
 export const formatString = (string: string) => {

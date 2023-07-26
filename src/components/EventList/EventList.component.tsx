@@ -33,14 +33,15 @@ const EventList = (props: EventListProps) => {
   const {handleSubscribeClick, eventsToDisplay, subscriptions} = props;
   // TODO add color coded badges
   return (
-    <div className="event-list">
+    <div className="event-list" data-testid="event-list">
       {eventsToDisplay.map(event => (
         <CustomEventChip
           key={event.id}
+          data-testid="event-list_item"
           onDelete={() => handleSubscribeClick(event.id)}
           label={event.title}
-          deleteIcon={subscriptions.find(el => el.id === event.id) ? <StarIcon sx={{fill: '#4b0082'}} /> : <StarBorderIcon />}
-          avatar={event.image ? <Avatar src={event.image} /> : <Avatar>{formatString(event.title)}</Avatar>}
+          deleteIcon={subscriptions.find(el => el.id === event.id) ? <StarIcon sx={{fill: '#4b0082'}} data-name={event.title}/> : <StarBorderIcon data-name={event.title}/>}
+          avatar={event.image ? <Avatar data-testid="event-list_item-avatar" src={event.image} alt={`${event.title} event avatar image`} /> : <Avatar>{formatString(event.title)}</Avatar>}
         />
       ))}
     </div>
