@@ -44,6 +44,6 @@ describe('<DiscoverEvents />', () => {
     renderDiscoverEvents({activeFilters});
     const filters = await screen.findAllByTestId('discover-event_filter');
 
-    expect(filters[0]).toHaveAttribute('data-isActive', 'true');
+    expect(filters[0]).toHaveAttribute('data-isactive', 'true');
   });
 });

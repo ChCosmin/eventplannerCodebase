@@ -38,10 +38,22 @@ const EventList = (props: EventListProps) => {
         <CustomEventChip
           key={event.id}
           data-testid="event-list_item"
-          onDelete={() => handleSubscribeClick(event.id)}
+          onDelete={() => handleSubscribeClick(event)}
           label={event.title}
-          deleteIcon={subscriptions.find(el => el.id === event.id) ? <StarIcon sx={{fill: '#4b0082'}} data-name={event.title}/> : <StarBorderIcon data-name={event.title}/>}
-          avatar={event.image ? <Avatar data-testid="event-list_item-avatar" src={event.image} alt={`${event.title} event avatar image`} /> : <Avatar>{formatString(event.title)}</Avatar>}
+          deleteIcon={
+            subscriptions.find(el => el.id === event.id) ? (
+              <StarIcon sx={{fill: '#4b0082'}} data-name={event.title} />
+            ) : (
+              <StarBorderIcon data-name={event.title} />
+            )
+          }
+          avatar={
+            event.image ? (
+              <Avatar data-testid="event-list_item-avatar" src={event.image} alt={`${event.title} event avatar image`} />
+            ) : (
+              <Avatar>{formatString(event.title)}</Avatar>
+            )
+          }
         />
       ))}
     </div>

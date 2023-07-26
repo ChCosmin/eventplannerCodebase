@@ -17,7 +17,7 @@ export interface DiscoverEventsProps {
 
 export interface EventListProps {
   // eslint-disable-next-line no-unused-vars
-  handleSubscribeClick: (id: string) => void;
+  handleSubscribeClick: (event: NextEventProps) => void;
   eventsToDisplay: NextEventProps[];
   subscriptions: NextEventProps[];
 }

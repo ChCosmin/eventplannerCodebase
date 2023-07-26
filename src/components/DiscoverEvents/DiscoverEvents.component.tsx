@@ -29,7 +29,7 @@ const DiscoverEvents = (props: DiscoverEventsProps) => {
         {sortByFilters.map((filter: string) => (
           <CustomSortbyChip
             data-testid="discover-event_filter"
-            data-isActive={activeFilters.includes(filter)}
+            data-isactive={activeFilters.includes(filter)}
             onClick={onFilterClick}
             variant={activeFilters.includes(filter) ? 'filled' : 'outlined'}
             key={filter}

@@ -6,10 +6,19 @@ import NextEvent from '../NextEvent/NextEvent.component';
 import DiscoverEvents from '../DiscoverEvents/DiscoverEvents.component';
 import EventList from '../EventList/EventList.component';
 import EventPlannerTitle from './EventPlannerTitle.component';
-import mockedData from '../../mockData/mockData.json';
-import {getFilters, getNextEvent} from '../../utils/formatters';
-import {NextEventProps} from '../Interfaces';
 import NoSubscriptions from '../NoSubscriptions/NoSubscriptions.component';
+
+import {NextEventProps} from '../Interfaces';
+import {getFilters, getNextEvent} from '../../utils/formatters';
+
+import {getEventList} from '../../services/eventList';
+import {getSubscriptions, setSubscription} from '../../services/subscriptions';
+import {CircularProgress, styled} from '@mui/material';
+
+const CustomLoadingSpinner = styled(CircularProgress)`
+  position: relative;
+  z-index: 3;
+`;
 
 const EventPlanner = () => {
   const [eventList, setEventList] = useState<NextEventProps[] | []>([]);
@@ -22,9 +31,17 @@ const EventPlanner = () => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [isDark, setIsDark] = useState(false);
 
+  const [isEventListLoading, setIsEventListLoading] = useState(false);
+
   useEffect(() => {
-    setEventList(mockedData);
-    setEventsToDisplay(mockedData);
+    setIsEventListLoading(true);
+    getEventList()
+      .then(list => {
+        setEventList(list);
+        setEventsToDisplay(list);
+        setIsEventListLoading(false);
+      })
+      .catch(err => console.error(err));
   }, []);
 
   // get all existing unique filters from the event list
@@ -34,6 +51,12 @@ const EventPlanner = () => {
       setSortByFilters(filters);
     }
   }, [eventList]);
+
+  // useEffect(() => {
+  //   getSubscriptions().then(subs => {
+  //     setSubscriptions(subs);
+  //   });
+  // }, []);
 
   // if all filters are disabled, show all events
   useEffect(() => {
@@ -50,19 +73,19 @@ const EventPlanner = () => {
     if (updateNextEvent) setNextEvent(updateNextEvent);
   }, [subscriptions]);
 
-  const handleSubscribeClick = (id: string) => {
-    const isSubscribed = subscriptions.find(el => el.id === id);
-    const eventToSubscribe = eventsToDisplay.find((el: NextEventProps) => el.id === id);
+  const handleSubscribeClick = (event: NextEventProps) => {
+    const isSubscribed = subscriptions.find(el => el.id === event.id);
     const newSubscriptions = [...subscriptions];
 
     if (isSubscribed) {
       newSubscriptions.splice(newSubscriptions.indexOf(isSubscribed), 1);
     } else {
-      newSubscriptions.push(eventToSubscribe);
+      newSubscriptions.push(event);
     }
-
     setSubscriptions([...newSubscriptions]);
+    setSubscription([...newSubscriptions]);
   };
+
   const handleSortByClick = (event: any) => {
     const filterName = event.target.textContent; // get clicked filter name
     const newActiveFilters = [...activeFilters];
@@ -90,22 +113,18 @@ const EventPlanner = () => {
     setIsDark(!isDark);
   };
 
-  // useEffect(() => {
-  //   setCount(JSON.parse(window.localStorage.getItem('count')));
-  // }, []);
-
-  // useEffect(() => {
-  //   window.localStorage.setItem('count', count);
-  // }, [count]);
-
   const displayNextEvent = Object.keys(nextEvent).length;
-  // console.log(isDark);
+
   return (
     <div className="event-planner_container">
       <EventPlannerTitle isDark={isDark} handleDarkModeClick={handleDarkModeClick} />
       {displayNextEvent ? <NextEvent {...nextEvent} /> : <NoSubscriptions />}
       <DiscoverEvents onFilterClick={handleSortByClick} sortByFilters={sortByFilters} activeFilters={activeFilters} />
-      <EventList subscriptions={subscriptions} handleSubscribeClick={handleSubscribeClick} eventsToDisplay={eventsToDisplay} />
+      {isEventListLoading ? (
+        <CustomLoadingSpinner color="secondary" />
+      ) : (
+        <EventList subscriptions={subscriptions} handleSubscribeClick={handleSubscribeClick} eventsToDisplay={eventsToDisplay} />
+      )}
 
       <div className="background-circle" />
     </div>
