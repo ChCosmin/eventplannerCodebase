@@ -1,0 +1,15 @@
+.event-list {
+  position: relative;
+  padding-top: 20px;
+  height: 300px;
+  flex-direction: column;
+  margin-top: 20px;
+  overflow: scroll;
+  z-index: 2;
+}
+
+.event-list::-webkit-scrollbar {
+  display: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

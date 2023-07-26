@@ -1,0 +1,51 @@
+/* TODO try gradient from angle */
+.next-event {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  padding: 14px;
+  background-image: linear-gradient(to right, rgba(75, 0, 130, 0.5), #eee);
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2), rgb(255, 255, 255) -5px 0px 5px inset;
+}
+
+.next-event_title {
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+.next-event_logo-container {
+  background: #eee;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.next-event_logo-text {
+  color: #61dafb;
+  font-weight: bolder;
+  font-size: 12px;
+}
+
+.next-event_info {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.next-event_info span {
+  font-size: 12px;
+}
+
+.next-event_info-title {
+  margin: 0;
+  width: min-content;
+}
+
+.next-event_group {
+  display: flex;
+}

@@ -1,0 +1,20 @@
+.discover-events_container {
+  margin: 30px 0px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.discover-events_title {
+  font-weight: 500;
+  margin: 0;
+}
+
+.discover-events_sort-by {
+  display: flex;
+  align-items: center;
+}
+
+.discover-events_sort-by-label {
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: 600;
+}
