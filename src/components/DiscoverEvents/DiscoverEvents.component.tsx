@@ -12,6 +12,10 @@ const CustomSortbyChip = styled(Chip)`
   margin-left: 10px;
   cursor: pointer;
   user-select: none;
+
+  && .dark {
+    color: #fff;
+  }
 `;
 
 const texts = {

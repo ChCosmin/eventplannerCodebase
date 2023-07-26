@@ -12,7 +12,7 @@ import {NextEventProps} from '../Interfaces';
 import {getFilters, getNextEvent} from '../../utils/formatters';
 
 import {getEventList} from '../../services/eventList';
-import {getSubscriptions, setSubscription} from '../../services/subscriptions';
+// import {getSubscriptions, setSubscription} from '../../services/subscriptions';
 import {CircularProgress, styled} from '@mui/material';
 
 const CustomLoadingSpinner = styled(CircularProgress)`
@@ -33,6 +33,9 @@ const EventPlanner = () => {
 
   const [isEventListLoading, setIsEventListLoading] = useState(false);
 
+  const [theme, setTheme] = useState('light');
+
+  // get events from update eventList
   useEffect(() => {
     setIsEventListLoading(true);
     getEventList()
@@ -52,13 +55,15 @@ const EventPlanner = () => {
     }
   }, [eventList]);
 
+  // didn't manage to make it fully work in time
   // useEffect(() => {
   //   getSubscriptions().then(subs => {
-  //     setSubscriptions(subs);
+  //     // setSubscriptions(subs);
+  //     console.log(subs);
   //   });
   // }, []);
 
-  // if all filters are disabled, show all events
+  // reset events to display if no filters selected;
   useEffect(() => {
     if (activeFilters.length === 0) setEventsToDisplay(eventList);
   }, [activeFilters, eventList]);
@@ -67,11 +72,17 @@ const EventPlanner = () => {
     if (subscriptions.length) setNextEvent({});
   }, [subscriptions]);
 
+  // if subscriptions exist, show event closest to today
   useEffect(() => {
     const updateNextEvent = getNextEvent(subscriptions);
 
     if (updateNextEvent) setNextEvent(updateNextEvent);
   }, [subscriptions]);
+
+  // persist theme
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
 
   const handleSubscribeClick = (event: NextEventProps) => {
     const isSubscribed = subscriptions.find(el => el.id === event.id);
@@ -83,7 +94,7 @@ const EventPlanner = () => {
       newSubscriptions.push(event);
     }
     setSubscriptions([...newSubscriptions]);
-    setSubscription([...newSubscriptions]);
+    // setSubscription([...newSubscriptions]);
   };
 
   const handleSortByClick = (event: any) => {
@@ -110,13 +121,18 @@ const EventPlanner = () => {
   };
 
   const handleDarkModeClick = () => {
+    if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
     setIsDark(!isDark);
   };
 
   const displayNextEvent = Object.keys(nextEvent).length;
 
   return (
-    <div className="event-planner_container">
+    <div className={`event-planner_container ${theme}`}>
       <EventPlannerTitle isDark={isDark} handleDarkModeClick={handleDarkModeClick} />
       {displayNextEvent ? <NextEvent {...nextEvent} /> : <NoSubscriptions />}
       <DiscoverEvents onFilterClick={handleSortByClick} sortByFilters={sortByFilters} activeFilters={activeFilters} />

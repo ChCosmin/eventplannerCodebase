@@ -29,12 +29,10 @@ export const getNextEvent = (subscriptions: NextEventProps[]) => {
   let dates = [];
   let closestDate = new Date();
   let nextEvent = {};
-
   if (subscriptions.length) {
     dates = subscriptions.map(el => new Date(el.startDate));
     closestDate = closestTo(today, dates);
     nextEvent = subscriptions.find(el => new Date(el.startDate).getTime() === closestDate.getTime());
   }
-
   return nextEvent;
 };

@@ -26,3 +26,7 @@ export interface EventPlannerTitleProps {
   isDark: boolean;
   handleDarkModeClick: () => void;
 }
+
+export interface EventPlannerProps {
+  toggleTheme: () => void;
+}
