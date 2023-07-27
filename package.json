@@ -85,7 +85,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-react": "^7.33.0",
     "jest-environment-jsdom": "^29.6.1",
-    "json-server": "^0.17.3",
-    "nyc": "^15.1.0"
+    "json-server": "^0.17.3"
   }
 }
