@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 import React from 'react';
 import Switch from '@mui/material/Switch';
-import {EventPlannerTitleProps} from '../Interfaces';
+import {EventPlannerHeaderProps} from '../Interfaces';
 import {styled} from '@mui/material';
 
 const MaterialUISwitch = styled(Switch)(({theme}) => ({
@@ -51,7 +51,9 @@ const MaterialUISwitch = styled(Switch)(({theme}) => ({
   }
 }));
 
-const EventPlannerTitle = (props: EventPlannerTitleProps) => {
+const texts = {TITLE: 'Welcome'};
+
+const EventPlannerHeader = (props: EventPlannerHeaderProps) => {
   const {isDark, handleDarkModeClick} = props;
 
   return (
@@ -59,9 +61,9 @@ const EventPlannerTitle = (props: EventPlannerTitleProps) => {
       <div className="switch-container">
         <MaterialUISwitch checked={isDark} onChange={handleDarkModeClick} />
       </div>
-      <h1 className="event-planner_title">Welcome</h1>
+      <h1 className="event-planner_title">{texts.TITLE}</h1>
     </>
   );
 };
 
-export default EventPlannerTitle;
+export default EventPlannerHeader;

@@ -22,7 +22,7 @@ export interface EventListProps {
   subscriptions: NextEventProps[];
 }
 
-export interface EventPlannerTitleProps {
+export interface EventPlannerHeaderProps {
   isDark: boolean;
   handleDarkModeClick: () => void;
 }

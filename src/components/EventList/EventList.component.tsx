@@ -31,7 +31,7 @@ const CustomEventChip = styled(Chip)`
 
 const EventList = (props: EventListProps) => {
   const {handleSubscribeClick, eventsToDisplay, subscriptions} = props;
-  // TODO add color coded badges
+
   return (
     <div className="event-list" data-testid="event-list">
       {eventsToDisplay.map(event => (

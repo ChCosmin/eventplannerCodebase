@@ -1,19 +1,18 @@
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 import React, {useEffect, useState} from 'react';
 import './EventPlanner.styles.css';
+import {CircularProgress, styled} from '@mui/material';
 
 import NextEvent from '../NextEvent/NextEvent.component';
 import DiscoverEvents from '../DiscoverEvents/DiscoverEvents.component';
 import EventList from '../EventList/EventList.component';
-import EventPlannerTitle from './EventPlannerTitle.component';
+import EventPlannerHeader from './EventPlannerHeader.component';
 import NoSubscriptions from '../NoSubscriptions/NoSubscriptions.component';
 
 import {NextEventProps} from '../Interfaces';
 import {getFilters, getNextEvent} from '../../utils/formatters';
-
 import {getEventList} from '../../services/eventList';
 // import {getSubscriptions, setSubscription} from '../../services/subscriptions';
-import {CircularProgress, styled} from '@mui/material';
 
 const CustomLoadingSpinner = styled(CircularProgress)`
   position: relative;
@@ -68,10 +67,6 @@ const EventPlanner = () => {
     if (activeFilters.length === 0) setEventsToDisplay(eventList);
   }, [activeFilters, eventList]);
 
-  useEffect(() => {
-    if (subscriptions.length) setNextEvent({});
-  }, [subscriptions]);
-
   // if subscriptions exist, show event closest to today
   useEffect(() => {
     const updateNextEvent = getNextEvent(subscriptions);
@@ -79,7 +74,7 @@ const EventPlanner = () => {
     if (updateNextEvent) setNextEvent(updateNextEvent);
   }, [subscriptions]);
 
-  // persist theme
+  // persist theme, theme functionality no fully implemented
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
@@ -101,17 +96,19 @@ const EventPlanner = () => {
     const filterName = event.target.textContent; // get clicked filter name
     const newActiveFilters = [...activeFilters];
     let newEventsToDisplay = [...eventsToDisplay];
+
+    //if filter already selected
     if (activeFilters.includes(filterName)) {
-      //if filter already selected
       const newEvents = eventsToDisplay?.filter((event: NextEventProps) => !event.categories.includes(filterName)); // get events to display that aren't that filter
       newActiveFilters.splice(activeFilters.indexOf(filterName), 1); //remove selected filter
       newEventsToDisplay = newEvents;
     } else {
       // if filter wasn't selected b4
       newActiveFilters.push(filterName); // add it to the active filter list
-      const eventsWithFilterName = eventList.filter((el: NextEventProps) => el.categories?.includes(filterName));
+      const eventsWithFilterName = eventList.filter((el: NextEventProps) => el.categories?.includes(filterName)); // add event that have selected filter
       newEventsToDisplay = [...eventsWithFilterName];
       activeFilters.forEach((filter: string) => {
+        // add rest events that were already selected
         const ev = eventList.filter((events: NextEventProps) => events.categories?.includes(filter));
         newEventsToDisplay.push(...ev);
       });
@@ -133,7 +130,7 @@ const EventPlanner = () => {
 
   return (
     <div className={`event-planner_container ${theme}`}>
-      <EventPlannerTitle isDark={isDark} handleDarkModeClick={handleDarkModeClick} />
+      <EventPlannerHeader isDark={isDark} handleDarkModeClick={handleDarkModeClick} />
       {displayNextEvent ? <NextEvent {...nextEvent} /> : <NoSubscriptions />}
       <DiscoverEvents onFilterClick={handleSortByClick} sortByFilters={sortByFilters} activeFilters={activeFilters} />
       {isEventListLoading ? (
